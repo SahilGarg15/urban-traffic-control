@@ -1,0 +1,101 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Output files
+output/
+*.pkl
+*.joblib
+*.h5
+
+# Data (keep structure, ignore large files)
+data/*.csv
+!data/traffic.csv
+data/*.xlsx
+data/*.json
+data/*.parquet
+
+# Plots and figures
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.svg
+plots/
+figures/
+
+# Models
+models/*.pkl
+models/*.h5
+models/*.pt
+models/*.pth
+
+# Logs
+*.log
+logs/
+
+# OS
+Thumbs.db
+.DS_Store
+*.bak
+*.tmp
+
+# Environment variables
+.env
+.env.local
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Streamlit
+.streamlit/secrets.toml
+.streamlit/config.toml
+
+# Temporary files
+temp/
+tmp/
+*.temp
