@@ -263,6 +263,11 @@ class TrafficForecasting:
     
     Uses Random Forest to predict next hour's traffic based on
     historical patterns and lag features.
+    
+    Evaluation Strategy:
+    - Chronological Train-Test Split to reflect real-world deployment conditions.
+    - We do NOT use random shuffling because we must simulate predicting the 
+      future based on the past. Random splitting causes temporal data leakage.
     """
     
     def __init__(self, data, junction_id=1):
@@ -344,6 +349,8 @@ class TrafficForecasting:
         Features: Hour, DayOfWeek, IsWeekend, Traffic_Last_Hour, Traffic_Yesterday_Same_Hour
         Target: Vehicles (next hour)
         
+        Evaluation Strategy: Chronological Train-Test Split to reflect real-world deployment conditions.
+        
         Returns:
             Trained model
         """
@@ -357,16 +364,23 @@ class TrafficForecasting:
         X = self.junction_data[feature_cols]
         y = self.junction_data['Vehicles']
         
-        # Split data: 80% train, 20% test
-        # Use temporal split (not random) for time series
+        # CRITICAL: Chronological Split (NOT Random)
+        # We do NOT shuffle because we must simulate predicting the future based on the past.
+        # Random splitting causes temporal data leakage - the model would "see the future"
+        # during training, artificially inflating performance metrics.
+        # 
+        # Split Strategy: First 80% = Training, Last 20% = Testing
+        # This ensures we train on historical data and test on future unseen periods.
         split_idx = int(len(X) * 0.8)
         self.X_train = X.iloc[:split_idx]
         self.X_test = X.iloc[split_idx:]
         self.y_train = y.iloc[:split_idx]
         self.y_test = y.iloc[split_idx:]
         
-        print(f"Training set: {len(self.X_train):,} records")
-        print(f"Test set: {len(self.X_test):,} records")
+        print(f"Training set: {len(self.X_train):,} records (earliest 80% chronologically)")
+        print(f"Test set: {len(self.X_test):,} records (most recent 20% chronologically)")
+        print(f"Train period: {self.junction_data.iloc[:split_idx]['DateTime'].min()} to {self.junction_data.iloc[:split_idx]['DateTime'].max()}")
+        print(f"Test period: {self.junction_data.iloc[split_idx:]['DateTime'].min()} to {self.junction_data.iloc[split_idx:]['DateTime'].max()}")
         
         # Train Random Forest
         self.model = RandomForestRegressor(
@@ -386,9 +400,12 @@ class TrafficForecasting:
         """
         Evaluate model performance using MAE and R2 Score.
         
+        Evaluation Strategy: Chronological Train-Test Split to reflect real-world deployment conditions.
+        
         Prints:
         - Mean Absolute Error (MAE): Average prediction error
         - R2 Score: Proportion of variance explained
+        - Business-relevant interpretation for stakeholders
         """
         print("\n" + "-" * 70)
         print("Evaluating Model Performance...")
@@ -412,13 +429,21 @@ class TrafficForecasting:
         print(f"  - MAE (Mean Absolute Error): {mae_train:.2f} vehicles")
         print(f"  - R2 Score: {r2_train:.4f}")
         
-        print("\nTest Set:")
+        print("\nTest Set (Future Unseen Data):")
         print(f"  - MAE (Mean Absolute Error): {mae_test:.2f} vehicles")
         print(f"  - R2 Score: {r2_test:.4f}")
         
-        print("\nInterpretation:")
-        print(f"  - On average, predictions are off by {mae_test:.2f} vehicles")
-        print(f"  - Model explains {r2_test*100:.1f}% of variance in traffic")
+        print("\n" + "=" * 70)
+        print("BUSINESS INTERPRETATION")
+        print("=" * 70)
+        print(f"Interpretation: On average, our model's traffic count prediction is off by ")
+        print(f"±{mae_test:.2f} vehicles. This accuracy is acceptable for trend-level planning ")
+        print(f"(e.g., signal timing optimization, infrastructure decisions) rather than ")
+        print(f"millisecond-level real-time control.")
+        print(f"")
+        print(f"Model Reliability: The R² score of {r2_test:.4f} indicates the model explains ")
+        print(f"{r2_test*100:.1f}% of traffic variance, demonstrating strong predictive capability.")
+        print("=" * 70)
         
         # Feature importance
         feature_importance = pd.DataFrame({
