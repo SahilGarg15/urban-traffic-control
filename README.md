@@ -10,7 +10,17 @@ A comprehensive AI-powered system for analyzing historical traffic patterns, for
 
 ---
 
-## 📋 Project Overview
+## � Business & Operations Analytics Summary
+
+This project was designed as a **decision-support analytics system** that converts large volumes of operational traffic data into actionable insights for congestion management and capacity planning.
+
+It focuses on **identifying peak-load patterns**, **recurring operational bottlenecks**, and **zone-level performance differences**, and communicates these insights through dashboards and data-backed recommendations.
+
+While machine learning techniques are used where appropriate, the primary goal of the system is **business insight and operational decision-making**, not just model experimentation.
+
+---
+
+## �📋 Project Overview
 
 This system implements a complete data science pipeline for urban traffic management:
 
@@ -27,6 +37,14 @@ This system implements a complete data science pipeline for urban traffic manage
 - **Junctions:** 4 major intersections
 - **Frequency:** Hourly measurements
 - **Features:** DateTime, Junction ID, Vehicle Count
+
+### 🔍 Key Analytics Questions Addressed
+
+* **When** do peak traffic loads occur and how consistent are they?
+* **Which zones** contribute disproportionately to congestion?
+* **How** does traffic behavior differ across time windows and days?
+* **Which zones** require priority operational intervention?
+* **What data-backed actions** can reduce congestion impact?
 
 ---
 
@@ -232,6 +250,13 @@ Junction 2 (Medium Congestion):
 2. **Junction 2 (Medium Congestion)**
    - *Action:* Moderate signal timing adjustments
    - *Impact:* Reduce average wait by 15-20%
+
+### 📈 Decision Outcomes & Insights
+
+* **Pattern Recognition:** Identified consistent peak-load windows responsible for the majority of congestion events.
+* **Prioritization:** Flagged high-impact zones requiring operational prioritization.
+* **Actionable Intelligence:** Enabled data-backed scheduling and signal timing recommendations based on cluster analysis.
+* **Proactive Planning:** Provided a framework for anticipating congestion rather than reacting to it.
 
 ---
 
