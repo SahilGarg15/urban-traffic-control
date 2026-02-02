@@ -306,7 +306,6 @@ def main():
     
     # Header
     st.title("🚦 Urban Traffic Flow Analysis & Optimization System")
-    st.markdown("**Final Year Project - Intelligent Traffic Management**")
     st.markdown("---")
     
     # Load data
@@ -500,7 +499,6 @@ def main():
     st.markdown("""
         <div style='text-align: center; color: #7f8c8d; padding: 20px;'>
             <p><strong>Urban Traffic Flow Analysis & Optimization System</strong></p>
-            <p>Final Year Project | Computer Science | 2026</p>
             <p>Powered by K-Means Clustering, Random Forest, and Rule-based AI</p>
         </div>
     """, unsafe_allow_html=True)

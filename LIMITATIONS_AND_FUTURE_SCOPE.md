@@ -97,7 +97,7 @@ Literature shows RL-based traffic control achieves 15-30% wait time reduction ov
 
 #### C. Computational Simplicity Trade-Off
 **Justification for Current Approach:**
-- **Explainability:** Rule-based systems provide transparent logic ("High congestion → recommend flyover") crucial for municipal decision-makers and final year project evaluation.
+- **Explainability:** Rule-based systems provide transparent logic ("High congestion → recommend flyover") crucial for municipal decision-makers.
 - **No Simulation Environment:** RL requires a traffic simulator (SUMO, CityFlow) to train policies via trial-and-error, which was outside project scope.
 - **Data Constraints:** RL demands real-time state transitions (current signal state → next traffic state), but our dataset only has hourly aggregates.
 
@@ -231,9 +231,6 @@ The current system is a **strategic planning tool** for long-term infrastructure
 1. **Richer data** (spatial, weather, real-time sensors)
 2. **Advanced models** (GNN for spatial, RL for control)
 3. **Engineering infrastructure** (stream processing, model serving, monitoring)
-
-These limitations are **acknowledged design constraints**, not oversights. For a final year project, the chosen scope balances **technical rigor** with **feasibility**, delivering a complete end-to-end ML system while identifying clear paths for future research—exactly what academic evaluation values.
-
 ---
 
 **Document Version:** 1.0  
